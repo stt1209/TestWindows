@@ -1,0 +1,107 @@
+
+Option Explicit
+
+Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal ms As Long)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Declare PtrSafe Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+Declare PtrSafe Sub mouse_event Lib "user32" ( _
+    ByVal dwFlags As Long, _
+    Optional ByVal dx As Long = 0, _
+    Optional ByVal dy As Long = 0, _
+    Optional ByVal dwDate As Long = 0, _
+    Optional ByVal dwExtraInfo As Long = 0)
+
+Sub Click(ByVal x, ByVal y)
+    SetCursorPos x, y  '左から100ピクセル、上から35ピクセルの位置にカーソルを移動
+    mouse_event 2  '左ボタン押下のコード
+    Sleep 10
+    mouse_event 4  '左ボタン解放のコード
+End Sub
+
+Sub DoubleClick(ByVal x, ByVal y)
+    SetCursorPos x, y  '左から100ピクセル、上から35ピクセルの位置にカーソルを移動
+    mouse_event 2  '左ボタン押下のコード
+    Sleep 5
+    mouse_event 4  '左ボタン解放のコード
+    mouse_event 2  '左ボタン押下のコード
+    Sleep 5
+    mouse_event 4  '左ボタン解放のコード
+    Sleep 10
+End Sub
+
+
+Sub Drag(ByVal bx, ByVal by, ByVal ax, ByVal ay)
+    SetCursorPos bx, by  '左から100ピクセル、上から35ピクセルの位置にカーソルを移動
+    mouse_event 2  '左ボタン押下のコード
+    Sleep 10
+    SetCursorPos ax, ay
+    Sleep 10
+    mouse_event 4  '左ボタン解放のコード
+    Sleep 10
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+Declare PtrSafe Sub keybd_event Lib "user32" ( _
+    ByVal bVk As Byte, _
+    ByVal bScan As Byte, _
+    ByVal dwFlags As Long, _
+    ByVal dwExtraInfo As Long _
+        )
+
+Private Const KEYEVENTF_KEYUP = &H2
+Private Const VK_LWIN = &H5B
+
+
+Public Sub clipAllScreen()
+    keybd_event vbKeySnapshot, 0&, &H1, 0&
+    Sleep 10
+    keybd_event vbKeySnapshot, 0&, &H1 Or KEYEVENTF_KEYUP, 0&
+    Sleep 10
+End Sub
+
+Public Sub clipActiveWindow()
+    keybd_event &HA4, 0&, &H1, 0&
+    keybd_event vbKeySnapshot, 0&, &H1, 0&
+    Sleep 10
+    keybd_event vbKeySnapshot, 0&, &H1 Or KEYEVENTF_KEYUP, 0&
+    keybd_event &HA4, 0&, &H1 Or KEYEVENTF_KEYUP, 0&
+    Sleep 10
+End Sub
+ 
+Public Sub saveAllScreenAsFile()
+    keybd_event VK_LWIN, 0, 0, 0
+    keybd_event vbKeySnapshot, 0, 0, 0
+    Sleep 10
+    keybd_event VK_LWIN, 0, KEYEVENTF_KEYUP, 0
+    keybd_event vbKeySnapshot, 0, KEYEVENTF_KEYUP, 0
+    Sleep 10
+End Sub
+
+
+
+
+
+

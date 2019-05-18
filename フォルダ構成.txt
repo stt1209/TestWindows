@@ -1,0 +1,5 @@
+C:\Users\RyoSetoh\Desktop\autoPilot
+C:\Users\RyoSetoh\Desktop\autoPilot\cmd
+C:\Users\RyoSetoh\Desktop\autoPilot\cmd\user
+C:\Users\RyoSetoh\Desktop\autoPilot\log
+C:\Users\RyoSetoh\Desktop\autoPilot\script
